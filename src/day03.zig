@@ -1,28 +1,26 @@
 const std = @import("std");
 const Allocator = std.mem.Allocator;
-const List = std.ArrayList;
-const Map = std.AutoHashMap;
-const StrMap = std.StringHashMap;
-const BitSet = std.DynamicBitSet;
+const ArrayList = std.ArrayList;
+const AutoHashMap = std.AutoHashMap;
+const StringHashMap = std.StringHashMap;
+const DynamicBitSet = std.DynamicBitSet;
 
 const util = @import("util.zig");
 const gpa = util.gpa;
 
 const data = @embedFile("data/day03.txt");
 
-pub fn main() !void {
-    
-}
+pub fn main() !void {}
 
 // Useful stdlib functions
 const tokenize = std.mem.tokenize;
 const split = std.mem.split;
-const indexOf = std.mem.indexOfScalar;
+const indexOfScalar = std.mem.indexOfScalar;
 const indexOfAny = std.mem.indexOfAny;
-const indexOfStr = std.mem.indexOfPosLinear;
-const lastIndexOf = std.mem.lastIndexOfScalar;
+const indexOfPosLinear = std.mem.indexOfPosLinear;
+const lastIndexOfScalar = std.mem.lastIndexOfScalar;
 const lastIndexOfAny = std.mem.lastIndexOfAny;
-const lastIndexOfStr = std.mem.lastIndexOfLinear;
+const lastIndexOfLinear = std.mem.lastIndexOfLinear;
 const trim = std.mem.trim;
 const sliceMin = std.mem.min;
 const sliceMax = std.mem.max;
