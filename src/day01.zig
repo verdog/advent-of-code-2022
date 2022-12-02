@@ -1,43 +1,44 @@
-const std = @import("std");
-const Allocator = std.mem.Allocator;
-const ArrayList = std.ArrayList;
-const AutoHashMap = std.AutoHashMap;
-const StringHashMap = std.StringHashMap;
-const DynamicBitSet = std.DynamicBitSet;
-
-const util = @import("util.zig");
-const gpa = util.gpa;
-
+// const data = @embedFile("data/day01_sample.txt");
 const data = @embedFile("data/day01.txt");
 
-pub fn main() !void {}
+pub noinline fn main() void {
+    @setEvalBranchQuota(100000);
+
+    const mosts = comptime blk: {
+        var mosts_buf = [_]usize{ 0, 0, 0, 0 };
+
+        var line_itr = split(u8, data, "\n");
+        var running_total: usize = 0;
+
+        while (line_itr.next()) |line| {
+            if (line.len > 0) {
+                const line_amount = parseInt(usize, line, 10) catch return;
+                running_total += line_amount;
+            } else {
+                mosts_buf[3] = running_total;
+
+                sort(usize, &mosts_buf, {}, desc(usize));
+
+                running_total = 0;
+            }
+        }
+
+        break :blk mosts_buf;
+    };
+
+    const out = std.fmt.comptimePrint("part1: {}, part2: {}\n", .{ mosts[0], mosts[0] + mosts[1] + mosts[2] });
+    _ = std.os.system.write(0, out, out.len);
+}
 
 // Useful stdlib functions
+const std = @import("std");
 const tokenize = std.mem.tokenize;
 const split = std.mem.split;
-const indexOfScalar = std.mem.indexOfScalar;
-const indexOfAny = std.mem.indexOfAny;
-const indexOfPosLinear = std.mem.indexOfPosLinear;
-const lastIndexOfScalar = std.mem.lastIndexOfScalar;
-const lastIndexOfAny = std.mem.lastIndexOfAny;
-const lastIndexOfLinear = std.mem.lastIndexOfLinear;
-const trim = std.mem.trim;
-const sliceMin = std.mem.min;
-const sliceMax = std.mem.max;
-
 const parseInt = std.fmt.parseInt;
-const parseFloat = std.fmt.parseFloat;
-
-const min = std.math.min;
-const min3 = std.math.min3;
-const max = std.math.max;
-const max3 = std.math.max3;
 
 const print = std.debug.print;
-const assert = std.debug.assert;
 
 const sort = std.sort.sort;
-const asc = std.sort.asc;
 const desc = std.sort.desc;
 
 // Generated from template/template.zig.
