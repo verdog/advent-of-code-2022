@@ -9,7 +9,7 @@ const util = @import("util.zig");
 const gpa = util.gpa;
 
 const data = @embedFile("data/day04.txt");
-// const data = @embedFile("data/day04_sample.txt");
+// const data = @embedFile("data/day04_sampme.txt");
 
 const Pair = struct {
     low: usize,
@@ -37,15 +37,15 @@ pub fn main() !void {
         const left = groups.next().?;
         const right = groups.next().?;
 
-        var left_pair = try parseGroup(left);
-        var right_pair = try parseGroup(right);
+        const left_pair = try parseGroup(left);
+        const right_pair = try parseGroup(right);
 
         { // complete overlap
             var short_pair = &left_pair;
             var long_pair = &right_pair;
 
             if (long_pair.len < short_pair.len) {
-                std.mem.swap(Pair, short_pair, long_pair);
+                std.mem.swap(*const Pair, &short_pair, &long_pair);
             }
 
             if (short_pair.low >= long_pair.low and short_pair.high <= long_pair.high) {
@@ -58,7 +58,7 @@ pub fn main() !void {
             var high_pair = &right_pair;
 
             if (low_pair.low > high_pair.low) {
-                std.mem.swap(Pair, low_pair, high_pair);
+                std.mem.swap(*const Pair, &low_pair, &high_pair);
             }
 
             if (low_pair.low + low_pair.len > high_pair.low) {
