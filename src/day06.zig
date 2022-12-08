@@ -9,8 +9,33 @@ const util = @import("util.zig");
 const gpa = util.gpa;
 
 const data = @embedFile("data/day06.txt");
+// const data = @embedFile("data/day06_sample.txt");
 
-pub fn main() !void {}
+pub fn main() !void {
+    var i: usize = 0;
+
+    while (i < data.len - 14 - 1) : (i += 1) {
+        const window = data[i .. i + 14];
+
+        var match = false;
+
+        var j: usize = 0;
+        outer: while (j < 14) : (j += 1) {
+            var k: usize = 0;
+            while (k < 14) : (k += 1) {
+                if (j == k) continue;
+                if (window[j] == window[k]) {
+                    match = true;
+                    break :outer;
+                }
+            }
+        }
+
+        if (!match) break;
+    }
+
+    print("part1: {}, part2: {}\n", .{ i + 14, 0 });
+}
 
 // Useful stdlib functions
 const tokenize = std.mem.tokenize;
